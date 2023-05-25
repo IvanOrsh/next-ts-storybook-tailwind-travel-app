@@ -5,6 +5,8 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  // Toggle dark-mode based on data-mode="dark"
+  darkMode: ["class", '[data-mode="dark"]'],
   theme: {
     extend: {
       backgroundImage: {
@@ -14,5 +16,8 @@ module.exports = {
       },
     },
   },
+
+  // the purge below works with storybook for whatever reason
+  purge: ["./src/**/*.{js,jsx,ts,tsx}"],
   plugins: [require("@tailwindcss/forms")],
 };

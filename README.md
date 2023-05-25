@@ -1,8 +1,10 @@
-## just in case:
+Testing out next, storybook, tailwind
+
+## Eslint/Prettier:
 
 `pnpm i -D prettier eslint-config-prettier @typescript-eslint/eslint-plugin @typescript-eslint/parser eslint-import-resolver-typescript eslint-plugin-react eslint-plugin-import prettier-plugin-tailwindcss`
 
-## `.eslintrc.json`
+## Setting up `.eslintrc.json`
 
 ```json
 {
@@ -56,9 +58,9 @@
 
 ## `npx storybook@latest init`
 
-## with nextjs 13 and storybook 7 there's no need to do stuffs with `next/image`
+## With nextjs 13 and storybook 7 there's no need to do stuffs with `next/image`
 
-## we might need `@tailwindcss/forms`:
+## Might need `@tailwindcss/forms`:
 
 1. `npm install -D @tailwindcss/forms`
 
@@ -77,7 +79,7 @@ module.exports = {
 };
 ```
 
-## setting up Jest:
+## Setting up Jest:
 
 1. `npm install --save-dev jest jest-environment-jsdom @testing-library/react @testing-library/jest-dom`
 
@@ -102,3 +104,89 @@ module.exports = createJestConfig(customJestConfig);
 ```
 
 TODO: figure out, why `jest --watch` fails to run
+
+## How to setup Tailwind CSS and Storybook
+
+- Build Tailwind next to Storybook
+- Provide Tailwind to stories
+- Use Tailwind in your components
+- Switch Tailwind themes in a click
+
+1. `npm i -D @storybook/addon-styling` (postcss autoprefixer - already installed)
+
+2. .storybook/main.js:
+
+```js
+module.exports = {
+  addons: [
+    "@storybook/addon-links",
+    "@storybook/addon-essentials",
+    "@storybook/addon-interactions",
+    {
+      name: "@storybook/addon-styling",
+      options: {
+        // Check out https://github.com/storybookjs/addon-styling/blob/main/docs/api.md
+        // For more details on this addon's options.
+        postCss: true,
+      },
+    },
+  ],
+  // snipped for brevity
+};
+```
+
+3. provide tailwind.css for .storybook/preview.js:
+
+```js
+// .storybook/preview.js
+
+import "../src/tailwind.css"; // replace with the name of your tailwind css file
+```
+
+4. also, in tailwind.config.js:
+
+- dark mode
+- purge
+
+```js
+module.exports = {
+  content: [
+    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+  ],
+  // Toggle dark-mode based on data-mode="dark"
+  darkMode: ["class", '[data-mode="dark"]'],
+  theme: {
+    extend: {
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-conic":
+          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+    },
+  },
+  purge: ["./src/**/*.{js,jsx,ts,tsx}"], // THIS LINE !!!
+  plugins: [require("@tailwindcss/forms")],
+};
+```
+
+5. and then, in .storybook/preview.js:
+
+```js
+// .storybook/preview.js
+import { withThemeByDataAttribute } from "@storybook/addon-styling";
+
+/* snipped for brevity */
+
+export const decorators = [
+  withThemeByDataAttribute({
+    themes: {
+      light: "light",
+      dark: "dark",
+    },
+    defaultTheme: "light",
+    attributeName: "data-mode",
+  }),
+];
+```

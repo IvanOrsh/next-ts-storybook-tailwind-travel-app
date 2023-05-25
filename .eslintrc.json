@@ -13,14 +13,10 @@
   "rules": {
     "react/prop-types": 0,
     "react/react-in-jsx-scope": 0,
-    "@typescript-eslint/no-empty-function": 0
+    "@typescript-eslint/no-empty-function": 0,
+    "@typescript-eslint/restrict-template-expressions": "allowAny"
   },
-  "plugins": [
-    "react",
-    "import",
-    "jsx-a11y",
-    "@typescript-eslint"
-  ],
+  "plugins": ["react", "import", "jsx-a11y", "@typescript-eslint"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "ecmaVersion": 2022,
@@ -40,10 +36,7 @@
       "version": "detect"
     },
     "import/parsers": {
-      "@typescript-eslint/parser": [
-        ".ts",
-        ".tsx"
-      ]
+      "@typescript-eslint/parser": [".ts", ".tsx"]
     },
     "import/resolver": {
       "typescript": {
