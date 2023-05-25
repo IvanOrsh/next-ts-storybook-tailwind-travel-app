@@ -5,9 +5,9 @@ interface BaseNavItem {
 }
 
 export interface NavItem extends BaseNavItem {
-  icont: JSX.Element;
+  icon: JSX.Element;
   toggleSidebar?: boolean;
-  subItems: SubNavItem;
+  subItems?: SubNavItem[];
 }
 
-export interface SubNavItem extends NavItem {}
+export interface SubNavItem extends BaseNavItem {}

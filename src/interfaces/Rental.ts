@@ -1,6 +1,7 @@
 export interface Rental {
   id: number;
   title: string;
+  subtitle: string;
   image: string;
   badge?: string;
   rating: number;
