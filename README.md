@@ -58,4 +58,21 @@
 
 ## with nextjs 13 and storybook 7 there's no need to do stuffs with `next/image`
 
-##
+## we might need `@tailwindcss/forms`:
+
+1. `npm install -D @tailwindcss/forms`
+
+2. in tailwind.config.js:
+
+```js
+// tailwind.config.js
+module.exports = {
+  theme: {
+    // ...
+  },
+  plugins: [
+    require("@tailwindcss/forms"),
+    // ...
+  ],
+};
+```
